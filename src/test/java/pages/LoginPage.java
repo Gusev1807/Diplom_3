@@ -12,17 +12,18 @@ public class LoginPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
+    // Локаторы как атрибуты класса
+    private final By emailField = By.xpath("(//input[@class='text input__textfield text_type_main-default'])[1]");
+    private final By passwordField = By.xpath("(//input[@class='text input__textfield text_type_main-default'])[2]");
+    private final By loginButton = By.xpath("//button[text()='Войти']");
+    private final By registerFormLoginButton = By.xpath("//a[text()='Войти']");
+    private final By forgotPasswordButton = By.xpath("//a[text()='Восстановить пароль']");
+    private final By passwordRecoveryEmailField = By.xpath("//input[@name='name']");
+
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }
-
-    // Локаторы для формы входа
-    private By emailField = By.xpath("(//input[@class='text input__textfield text_type_main-default'])[1]");
-    private By passwordField = By.xpath("(//input[@class='text input__textfield text_type_main-default'])[2]");
-    private By loginButton = By.xpath("//button[text()='Войти']");
-    private By registerFormLoginButton = By.xpath("//a[text()='Войти']");
-    private By forgotPasswordButton = By.xpath("//a[text()='Восстановить пароль']");
 
     // Методы действий
     @Step("Заполнить поле Email: {email}")
@@ -52,10 +53,8 @@ public class LoginPage {
 
     @Step("Проверить, что отображено поле Email для восстановления пароля")
     public boolean isPasswordRecoveryEmailFieldDisplayed() {
-        By emailFieldLocator = By.xpath("//input[@name='name']"); // или нужный xpath для поля email
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(emailFieldLocator)).isDisplayed();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(passwordRecoveryEmailField)).isDisplayed();
     }
-
 }
 
 

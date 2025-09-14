@@ -23,6 +23,7 @@ public class RegisterPage {
     private By emailField = By.xpath("(//input[@class='text input__textfield text_type_main-default'])[2]");
     private By passwordField = By.xpath("(//input[@class='text input__textfield text_type_main-default'])[3]");
     private By registerButton = By.xpath("//button[text()='Зарегистрироваться']");
+    private final By passwordErrorLocator = By.xpath("//p[contains(text(),'Некорректный пароль')]");
 
     // Методы действий
     @Step("Перейти на страницу регистрации")
@@ -52,8 +53,7 @@ public class RegisterPage {
 
     @Step("Получить текст ошибки пароля")
     public String getPasswordErrorText() {
-        By errorLocator = By.xpath("//p[contains(text(),'Некорректный пароль')]");
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(errorLocator)).getText();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(passwordErrorLocator)).getText();
     }
 }
 

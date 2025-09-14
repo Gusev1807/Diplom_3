@@ -13,15 +13,18 @@ public class ConstructorPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    public ConstructorPage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-    }
+    // Константа для активного класса вкладки
+    private static final String ACTIVE_TAB_CLASS = "tab_tab_type_current";
 
     // Локаторы вкладок
     private By bunsTab = By.xpath("//span[text()='Булки']/..");
     private By saucesTab = By.xpath("//span[text()='Соусы']/..");
     private By fillingsTab = By.xpath("//span[text()='Начинки']/..");
+
+    public ConstructorPage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+    }
 
     // Методы клика по вкладкам
     @Step("Перейти на вкладку 'Булки'")
@@ -39,19 +42,22 @@ public class ConstructorPage {
         driver.findElement(fillingsTab).click();
     }
 
-    // Методы проверки активности вкладки
+    // Метод проверки активности вкладки
+    private boolean isTabActive(By tabLocator) {
+        wait.until(ExpectedConditions.attributeContains(tabLocator, "class", ACTIVE_TAB_CLASS));
+        return driver.findElement(tabLocator).getAttribute("class").contains(ACTIVE_TAB_CLASS);
+    }
+
+    // Методы проверки активности каждой вкладки
     public boolean isBunsTabActive() {
-        wait.until(ExpectedConditions.attributeContains(bunsTab, "class", "tab_tab_type_current"));
-        return driver.findElement(bunsTab).getAttribute("class").contains("tab_tab_type_current");
+        return isTabActive(bunsTab);
     }
 
     public boolean isSaucesTabActive() {
-        wait.until(ExpectedConditions.attributeContains(saucesTab, "class", "tab_tab_type_current"));
-        return driver.findElement(saucesTab).getAttribute("class").contains("tab_tab_type_current");
+        return isTabActive(saucesTab);
     }
 
     public boolean isFillingsTabActive() {
-        wait.until(ExpectedConditions.attributeContains(fillingsTab, "class", "tab_tab_type_current"));
-        return driver.findElement(fillingsTab).getAttribute("class").contains("tab_tab_type_current");
+        return isTabActive(fillingsTab);
     }
 }
