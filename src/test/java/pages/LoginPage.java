@@ -49,6 +49,13 @@ public class LoginPage {
     public void clickForgotPassword() {
         wait.until(ExpectedConditions.elementToBeClickable(forgotPasswordButton)).click();
     }
+
+    @Step("Проверить, что отображено поле Email для восстановления пароля")
+    public boolean isPasswordRecoveryEmailFieldDisplayed() {
+        By emailFieldLocator = By.xpath("//input[@name='name']"); // или нужный xpath для поля email
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(emailFieldLocator)).isDisplayed();
+    }
+
 }
 
 

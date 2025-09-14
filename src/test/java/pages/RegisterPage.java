@@ -49,6 +49,12 @@ public class RegisterPage {
     public void clickRegisterButton() {
         wait.until(ExpectedConditions.elementToBeClickable(registerButton)).click();
     }
+
+    @Step("Получить текст ошибки пароля")
+    public String getPasswordErrorText() {
+        By errorLocator = By.xpath("//p[contains(text(),'Некорректный пароль')]");
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(errorLocator)).getText();
+    }
 }
 
 
